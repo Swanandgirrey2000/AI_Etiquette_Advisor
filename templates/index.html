@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Etiquette Advisor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Etiquette Advisor</h1>
+    <p>Ask any etiquette question, and I'll provide guidance!</p>
+    <form id="etiquetteForm">
+        <input type="text" id="prompt" placeholder="Enter your question" required>
+        <button type="submit">Get Advice</button>
+    </form>
+    <h3>Advice:</h3>
+    <p id="advice"></p>
+
+    <script>
+        document.getElementById("etiquetteForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const prompt = document.getElementById("prompt").value;
+
+            const response = await fetch("/get_advice", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt }),
+            });
+
+            const data = await response.json();
+            document.getElementById("advice").textContent = data.advice;
+        });
+    </script>
+</body>
+</html>
